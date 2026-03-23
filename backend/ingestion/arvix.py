@@ -1,6 +1,7 @@
 import feedparser 
 from datetime import datetime
 from base_code import BaseIngestor
+import json 
 
 class ArxivIngestor(BaseIngestor):
     def __init__(self,query="machine learning",max_results=5):
@@ -24,4 +25,8 @@ class ArxivIngestor(BaseIngestor):
                 "timestamp":datetime.now(datetime.timezone.utc).isoformat()
             })
 
-            return results
+            with open ("data/raw/data.json","w") as f:
+                json.dump(results,f,indent=2)
+
+arxiv=ArxivIngestor()
+arxiv.run()
