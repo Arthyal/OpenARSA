@@ -13,6 +13,6 @@ def clean_text(text:str)->str:
 def clean_record(record: dict) -> dict:
     record["title"] = clean_text(record.get("title", ""))
     record["summary"] = clean_text(record.get("summary", ""))
-    record["description"] = clean_text(record.get("description", ""))
+    
 
     return record

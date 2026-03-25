@@ -7,3 +7,6 @@ langchain_experimental
 logging
 feedparser 
 json
+
+sentence_transformers
+faiss-cpu
