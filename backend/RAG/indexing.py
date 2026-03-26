@@ -11,11 +11,20 @@ class embedding():
         self.model=HuggingFaceEmbeddings(
         model_name='sentence-transformers/all-MiniLM-L6-v2'
         )
+        self.db_path = "data/chroma_db"
 
-    def embedder(self,text):
-        return self.model.embed_query(text)
+   
     
-    def indexing(self,texts):
-        
-        embedding=self.embedder(texts)
+    def indexing(self,docs):
 
+        vector_store = Chroma(
+        embedding_function=self.model,
+        persist_directory=self.db_path,
+        collection_name='sample'
+        )
+        
+        ids = [str(hash(doc.page_content)) for doc in docs] # to prevent duplication
+        vector_store.add_documents(docs,id=ids)
+        vector_store.persist()
+
+        return vector_store
